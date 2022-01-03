@@ -33,7 +33,7 @@ class _RecipeListState extends State<RecipeList> {
     super.initState();
     //  Call getPreviousSearches
     getPreviousSearches();
-    
+
     searchTextController = TextEditingController(text: '');
     _scrollController
       ..addListener(() {
@@ -147,7 +147,22 @@ class _RecipeListState extends State<RecipeList> {
     );
   }
 
-  // TODO: Add startSearch
+  //  Add startSearch
+  void startSearch(String value) {
+    setState(() {
+      currentSearchList.clear();
+      currentCount = 0;
+      currentEndPosition = pageCount;
+      currentStartPosition = 0;
+      hasMore = true;
+      value = value.trim();
+
+      if (!previousSearches.contains(value)) {
+        previousSearches.add(value);
+        savePreviousSearches();
+      }
+    });
+  }
 
   Widget _buildRecipeLoader(BuildContext context) {
     if (searchTextController.text.length < 3) {
